@@ -52,23 +52,6 @@ public class FormMain extends javax.swing.JFrame {
         modelDarah = (DefaultTableModel)tblDarah.getModel();
         modelPendonoran = (DefaultTableModel)tblPendonoran.getModel();
         
-        //call database
-        try {
-            //load driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            //driver connection
-            String url = "jdbc:mysql://localhost:3307/bloodz";
-            String user = "root";
-            String password = "";
-            koneksi = DriverManager.getConnection(url, user, password); 
-            perintah = koneksi.createStatement();
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, e, "Pesan Kesalahan", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0); 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e, "Pesan Kesalahan", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
         //make cell having foreground color
         tcrDarah=tblDarah.getColumnModel().getColumn(5);
         tcrDarah.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
@@ -265,11 +248,11 @@ public class FormMain extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Pendonoran", "Gol Darah", "Nama Pendonor", "Tgl Donor", "Detil", "Ubah"
+                "ID Pendonoran", "Gol Darah", "Nama Pendonor", "Tgl Donor", "Detil", "Ubah", "Hapus"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -292,6 +275,7 @@ public class FormMain extends javax.swing.JFrame {
         if (tblPendonoran.getColumnModel().getColumnCount() > 0) {
             tblPendonoran.getColumnModel().getColumn(4).setResizable(false);
             tblPendonoran.getColumnModel().getColumn(5).setResizable(false);
+            tblPendonoran.getColumnModel().getColumn(6).setResizable(false);
         }
 
         btnTambahPendonoran.setBackground(new java.awt.Color(153, 0, 0));
@@ -414,6 +398,14 @@ public class FormMain extends javax.swing.JFrame {
             String[] pendonoran = {(String)tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0)};
             new DialogFormPendonoran(this, true,pendonoran ,"put").show();
         }
+        if(tblPendonoran.getSelectedColumn()==6){
+            int respon = JOptionPane.showConfirmDialog(this, "Ingin menghapus data pendonoran " + tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0) + 
+                        "?", "Konfirmasi",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); 
+            if (respon == JOptionPane.YES_OPTION) {
+                Model.delete("darah","id_pendonoran",(String)tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0));
+                Model.delete("pendonoran","id_pendonoran",(String)tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0));
+            }
+        }
     }//GEN-LAST:event_tblPendonoranMouseClicked
 
     /**
@@ -484,41 +476,36 @@ public class FormMain extends javax.swing.JFrame {
     void refreshTable(){
         modelDarah.setRowCount(0);
         modelDarah.fireTableDataChanged();
+        
         modelPendonoran.setRowCount(0);
         modelPendonoran.fireTableDataChanged(); 
-        try {
-            rs=perintah.executeQuery("Select id_kantong,gol_darah,nama_pendonor,tgl_donor,status from darah join pendonoran using(id_pendonoran) join pendonor using(id_pendonor)");
-            while(rs.next()) {
-                modelDarah.addRow(new Object []{
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),   
-                    rs.getString(5),
-                    "Detil"
-                });
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        
+        String[][] dataDarah = Model.arr2Result("Select id_kantong,gol_darah,nama_pendonor,tgl_donor,status from darah join pendonoran using(id_pendonoran) join pendonor using(id_pendonor)");
+        for(String[] darah:dataDarah){
+            modelDarah.addRow(new Object []{
+                darah[0],
+                darah[1],
+                darah[2],
+                darah[3],
+                darah[4],
+                "Detil"
+            });
         }
         
-        try {
-            rs=perintah.executeQuery("Select id_pendonoran,gol_darah,nama_pendonor,tgl_donor from pendonoran join pendonor using(id_pendonor)");
-            while(rs.next()) {
-                modelPendonoran.addRow(new Object []{
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4),   
-                    "Detil",
-                    "Edit",
-                });
-                
-                idCreatePendonoran = rs.getString(1);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
+        String[][] dataPendonoran = Model.arr2Result("Select id_pendonoran,gol_darah,nama_pendonor,tgl_donor from pendonoran join pendonor using(id_pendonor)");
+        for(String[] pendonoran:dataPendonoran){
+            modelPendonoran.addRow(new Object []{
+                pendonoran[0],
+                pendonoran[1],
+                pendonoran[2],
+                pendonoran[3],
+                "Detil",
+                "Ubah",
+                "Hapus",
+            });
+            idCreatePendonoran = pendonoran[0];
         }
+        
         generateCreateId();
     }
     void generateCreateId(){
@@ -551,6 +538,7 @@ class ColumnColorRenderer extends DefaultTableCellRenderer {
       super();
       this.foregroundColor = foregroundColor;
    }
+   
    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,   boolean hasFocus, int row, int column) {
       Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
       cell.setForeground(foregroundColor);

@@ -72,6 +72,38 @@ public class Model {
         return result;
     }
     
+     public static final String[][] arr2Result(String query){
+        String[][] result = null;
+        try {
+            Class.forName(dv);
+            Connection con = DriverManager.getConnection(url,user,pw);
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            ResultSet rs;
+            
+            rs = stmt.executeQuery(query);
+            int row=0,col=0, i=0;
+            if(rs!=null){
+                rs.last();
+                row=rs.getRow();
+            }
+            col = rs.getMetaData().getColumnCount();
+            rs = stmt.executeQuery(query);
+            result = new String[row][col];
+            
+            while (rs.next()) {
+                for (int j = 1; j <= col; j++) {
+                    result[i][j-1] = rs.getString(j);
+                }
+                i++;
+            }
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } 
+        return result;
+    }
+    
     public static final boolean updOrIns(String query){
         boolean x=false;
         try {
@@ -79,6 +111,25 @@ public class Model {
             Connection con = DriverManager.getConnection(url,user,pw);
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate(query);
+            con.close();
+            x=true;
+        } catch (ClassNotFoundException | SQLException e) {
+            if(e instanceof SQLIntegrityConstraintViolationException) {
+                JOptionPane.showMessageDialog(new JFrame(), e);
+            }else{
+                JOptionPane.showMessageDialog(new JFrame(), e);
+            }
+            x=false;
+        }
+        return x;
+    }
+    public static final boolean delete(String table,String key,String id){
+        boolean x=false;
+        try {
+            Class.forName(dv);
+            Connection con = DriverManager.getConnection(url,user,pw);
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            stmt.execute("DELETE FROM "+table+" WHERE "+key+" = '"+id+"'");
             con.close();
             x=true;
         } catch (ClassNotFoundException | SQLException e) {

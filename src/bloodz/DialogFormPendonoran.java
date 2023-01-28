@@ -46,7 +46,7 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
             tfNama.setText(dataPendonoran[2]);
             tfTglLahir.setText(dataPendonoran[3]);
             tfNoTlp.setText(dataPendonoran[4]);
-            tfAlamat.setText(dataPendonoran[4]);
+            tfAlamat.setText(dataPendonoran[5]);
         }
     }
 
