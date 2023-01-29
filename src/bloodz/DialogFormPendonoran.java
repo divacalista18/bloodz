@@ -64,7 +64,6 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
         lblIdPendonoran = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
@@ -78,7 +77,6 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
         jSeparator5 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         tfAlamat = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
         btnSimpanPendonoran = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -140,13 +138,12 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSimpanPendonoran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfTglLahir)
                     .addComponent(cbGolDarah, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                     .addComponent(lblIdPendonoran, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
@@ -159,52 +156,47 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
                     .addComponent(tfNoTlp)
                     .addComponent(jSeparator5)
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfAlamat)
-                    .addComponent(jSeparator6))
-                .addGap(50, 50, 50))
+                    .addComponent(tfAlamat))
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblIdPendonoran, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbGolDarah, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfTglLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfNoTlp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(10, 10, 10)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(25, 25, 25)
                 .addComponent(btnSimpanPendonoran, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(25, 25, 25))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -230,14 +222,14 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
 
     private void btnSimpanPendonoranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanPendonoranActionPerformed
         String idEditPendonor = Model.stringResult("select id_pendonor from pendonor where nama_pendonor = '"+tfNama.getText()
-                +"' and gol_darah = '"+cbGolDarah.getSelectedItem()
-                +"' and tgl_lahir = '"+tfTglLahir.getText()+"'");
-        
+            +"' and gol_darah = '"+cbGolDarah.getSelectedItem()
+            +"' and tgl_lahir = '"+tfTglLahir.getText()+"'");
+
         if(this.method=="post"){
             JOptionPane.showMessageDialog(this, "ini post");
             String idPendonorPendonoran;
             if (idEditPendonor.isEmpty()) {
-                
+
                 JOptionPane.showMessageDialog(this, "ini post - user lama");
                 String idCreatePendonor = Model.stringResult("SELECT id_pendonor FROM pendonor ORDER BY id_pendonor DESC LIMIT 1");
                 String sIdCreatePendonor = "";
@@ -265,57 +257,57 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
                         + tfTglLahir.getText()+"','"
                         + tfAlamat.getText()+"','"
                         + tfNoTlp.getText()+"')"
-                        );
+                    );
                 }catch(Exception e){
                     JOptionPane.showMessageDialog(this, "ini post - user baru");
 
                 }
-                
+
                 idPendonorPendonoran = idCreatePendonor;
             }else{
 
                 if(!Model.updOrIns("UPDATE pendonor SET "
-                        +"alamat = '"+ tfAlamat.getText()+"',"
-                        +"no_tlp = '"+ tfNoTlp.getText()
-                        +"' WHERE id_pendonor = '"+idEditPendonor+"'"
-                        )){
-                    
+                    +"alamat = '"+ tfAlamat.getText()+"',"
+                    +"no_tlp = '"+ tfNoTlp.getText()
+                    +"' WHERE id_pendonor = '"+idEditPendonor+"'"
+                )){
+
                 }
                 idPendonorPendonoran = idEditPendonor;
             }
             Model.updOrIns("INSERT INTO pendonoran VALUES ('"
-                    + pendonoran[0]+"','"
-                    + idPendonorPendonoran+"','"
-                    + LocalDate.now()+"')"
-                    );
+                + pendonoran[0]+"','"
+                + idPendonorPendonoran+"','"
+                + LocalDate.now()+"')"
+            );
             Model.updOrIns("INSERT INTO darah VALUES ('"
-                    + pendonoran[1]+"','"
-                    + pendonoran[0]+"','"
-                    + "Tersedia')"
-                    );
+                + pendonoran[1]+"','"
+                + pendonoran[0]+"','"
+                + "Tersedia')"
+            );
             dispose();
             JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Data", "Informasi",1);
         }else{
             if (!idEditPendonor.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "ini put - user lama");
                 Model.updOrIns("UPDATE pendonor SET "
-                        +"alamat = '"+ tfAlamat.getText()+"',"
-                        +"no_tlp = '"+ tfNoTlp.getText()
-                        +"' WHERE id_pendonor = '"+idEditPendonor+"'"
-                        );
+                    +"alamat = '"+ tfAlamat.getText()+"',"
+                    +"no_tlp = '"+ tfNoTlp.getText()
+                    +"' WHERE id_pendonor = '"+idEditPendonor+"'"
+                );
                 Model.updOrIns("UPDATE pendonoran SET "
-                        + "id_pendonor = '"+idEditPendonor+"' "
-                        + "WHERE id_pendonoran = '"+dataPendonoran[0]+"'");
+                    + "id_pendonor = '"+idEditPendonor+"' "
+                    + "WHERE id_pendonoran = '"+dataPendonoran[0]+"'");
             }else{
                 JOptionPane.showMessageDialog(this, "ini put - user baru");
                 Model.updOrIns("UPDATE pendonor SET "
-                        +"nama_pendonor = '"+ tfNama.getText()+"',"
-                        +"gol_darah = '"+ cbGolDarah.getSelectedItem()+"',"
-                        +"tgl_lahir = '"+ tfTglLahir.getText()+"',"
-                        +"alamat = '"+ tfAlamat.getText()+"',"
-                        +"no_tlp = '"+ tfNoTlp.getText()
-                        +"' WHERE id_pendonor = '"+dataPendonoran[6]+"'");
-              
+                    +"nama_pendonor = '"+ tfNama.getText()+"',"
+                    +"gol_darah = '"+ cbGolDarah.getSelectedItem()+"',"
+                    +"tgl_lahir = '"+ tfTglLahir.getText()+"',"
+                    +"alamat = '"+ tfAlamat.getText()+"',"
+                    +"no_tlp = '"+ tfNoTlp.getText()
+                    +"' WHERE id_pendonor = '"+dataPendonoran[6]+"'");
+
             }
             dispose();
             JOptionPane.showMessageDialog(this, "Berhasil Mengubah Data", "Informasi",1);
@@ -378,12 +370,10 @@ public class DialogFormPendonoran extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lblIdPendonoran;
     private javax.swing.JTextField tfAlamat;
     private javax.swing.JTextField tfNama;

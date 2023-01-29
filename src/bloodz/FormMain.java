@@ -53,7 +53,7 @@ public class FormMain extends javax.swing.JFrame {
         modelPendonoran = (DefaultTableModel)tblPendonoran.getModel();
         
         //make cell having foreground color
-        tcrDarah=tblDarah.getColumnModel().getColumn(5);
+        tcrDarah=tblDarah.getColumnModel().getColumn(4);
         tcrDarah.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
         
         tcrPendonoranDetail=tblPendonoran.getColumnModel().getColumn(4);
@@ -182,11 +182,11 @@ public class FormMain extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Kantong", "Gol Darah", "Pendonor", "Tgl Donor", "Status", "Detil"
+                "ID Kantong", "Gol Darah", "Pendonor", "Tgl Donor", "Detil"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -207,7 +207,7 @@ public class FormMain extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblDarah);
         tblDarah.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblDarah.getColumnModel().getColumnCount() > 0) {
-            tblDarah.getColumnModel().getColumn(5).setResizable(false);
+            tblDarah.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -374,13 +374,12 @@ public class FormMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTambahPendonoranActionPerformed
 
     private void tblDarahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDarahMouseClicked
-        if(tblDarah.getSelectedColumn()==5){
+        if(tblDarah.getSelectedColumn()==4){
             String[] darah = {
                 (String) tblDarah.getValueAt(tblDarah.getSelectedRow(),0),
                 (String) tblDarah.getValueAt(tblDarah.getSelectedRow(),1),
                 (String) tblDarah.getValueAt(tblDarah.getSelectedRow(),2),
                 (String) tblDarah.getValueAt(tblDarah.getSelectedRow(),3),
-                (String) tblDarah.getValueAt(tblDarah.getSelectedRow(),4),
             };
             new DialogDetilDarah(this, true, darah).show();
         }
@@ -480,14 +479,13 @@ public class FormMain extends javax.swing.JFrame {
         modelPendonoran.setRowCount(0);
         modelPendonoran.fireTableDataChanged(); 
         
-        String[][] dataDarah = Model.arr2Result("Select id_kantong,gol_darah,nama_pendonor,tgl_donor,status from darah join pendonoran using(id_pendonoran) join pendonor using(id_pendonor)");
+        String[][] dataDarah = Model.arr2Result("Select id_kantong,gol_darah,nama_pendonor,tgl_donor,status from darah join pendonoran using(id_pendonoran) join pendonor using(id_pendonor) where status = 'Tersedia'");
         for(String[] darah:dataDarah){
             modelDarah.addRow(new Object []{
                 darah[0],
                 darah[1],
                 darah[2],
                 darah[3],
-                darah[4],
                 "Detil"
             });
         }
