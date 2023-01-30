@@ -11,8 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 /**
  *
  * @author ShirasagiHimegimi
@@ -46,7 +45,7 @@ public class Model {
             }
             con.close();
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(new JFrame(), e);
+             e.printStackTrace();
 
         } 
         return result;
@@ -65,7 +64,7 @@ public class Model {
             }
             con.close();
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(new JFrame(), e);
+             e.printStackTrace();
 
         }
         
@@ -103,7 +102,37 @@ public class Model {
         } 
         return result;
     }
-    
+    public static final ArrayList arrLi2Result(String query){
+        ArrayList<ArrayList> result = new ArrayList<>();
+        try {
+            Class.forName(dv);
+            Connection con = DriverManager.getConnection(url,user,pw);
+            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            ResultSet rs;
+            
+            rs = stmt.executeQuery(query);
+            int row=0,col=0, i=0;
+            if(rs!=null){
+                rs.last();
+                row=rs.getRow();
+            }
+            col = rs.getMetaData().getColumnCount();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                result.add(new ArrayList<String>());
+                for (int j = 1; j <= col; j++) {
+                    result.get(i).add(rs.getString(j));
+                }
+                i++;
+            }
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } 
+        
+        return result;
+    }
     public static final boolean updOrIns(String query){
         boolean x=false;
         try {
@@ -115,9 +144,9 @@ public class Model {
             x=true;
         } catch (ClassNotFoundException | SQLException e) {
             if(e instanceof SQLIntegrityConstraintViolationException) {
-                JOptionPane.showMessageDialog(new JFrame(), e);
+                 e.printStackTrace();
             }else{
-                JOptionPane.showMessageDialog(new JFrame(), e);
+                 e.printStackTrace();
             }
             x=false;
         }
@@ -134,13 +163,16 @@ public class Model {
             x=true;
         } catch (ClassNotFoundException | SQLException e) {
             if(e instanceof SQLIntegrityConstraintViolationException) {
-                JOptionPane.showMessageDialog(new JFrame(), e);
+                 e.printStackTrace();
             }else{
-                JOptionPane.showMessageDialog(new JFrame(), e);
+                 e.printStackTrace();
             }
             x=false;
         }
         return x;
     }
     
+    public static final boolean auth(String u,String p){
+        return !Model.stringResult("SELECT id_user from user where username = '"+u+"' and password = '"+p+"'").isEmpty();
+    }
 }

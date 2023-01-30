@@ -77,10 +77,10 @@
                           <Component id="jSeparator4" alignment="1" max="32767" attributes="0"/>
                           <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfNama" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfNoTlp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="tfAlamat" alignment="1" max="32767" attributes="0"/>
                           <Component id="jSeparator5" alignment="1" max="32767" attributes="0"/>
                           <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfAlamat" alignment="1" max="32767" attributes="0"/>
+                          <Component id="tfNoTlp" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
@@ -114,13 +114,13 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jLabel11" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfNoTlp" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="tfAlamat" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="jSeparator5" min="-2" pref="19" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jLabel12" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfAlamat" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="tfNoTlp" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="btnSimpanPendonoran" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -185,7 +185,7 @@
                   <Font name="Verdana" size="14" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="no Telp"/>
+                <Property name="text" type="java.lang.String" value="Alamat"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbGolDarah">
@@ -220,7 +220,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tfNoTlp">
+            <Component class="javax.swing.JTextField" name="tfAlamat">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="18" style="1"/>
@@ -235,10 +235,10 @@
                   <Font name="Verdana" size="14" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="Alamat"/>
+                <Property name="text" type="java.lang.String" value="No Telepon"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tfAlamat">
+            <Component class="javax.swing.JTextField" name="tfNoTlp">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Verdana" size="18" style="1"/>

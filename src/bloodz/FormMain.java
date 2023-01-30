@@ -7,11 +7,6 @@ package bloodz;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -25,41 +20,18 @@ import javax.swing.table.TableColumn;
  * @author Diva Calista
  */
 public class FormMain extends javax.swing.JFrame {
-    //default table model
-    DefaultTableModel modelDarah;
-    DefaultTableModel modelPendonoran;
-    
-    //database
-    Connection koneksi;
-    Statement perintah;
-    ResultSet rs;
-    
-    
-    //table cell renderer
-    TableColumn tcrDarah, tcrPendonoranDetail,tcrPendonoranEdit,tcrPendonoranHapus;
-   
+
     //id create
-    String idCreatePendonoran;
     String idCreateDarah;
-    String idCreatePendonor;
+    String idCreatePendonoran;
+    String idCreatePengambilan;
+    static String  username;
     
-    public FormMain() {
+    public FormMain(String username) {
         initComponents();
-        //make window maximize
+        jTabbedPane2.setTitleAt(1, username);
+//        //make window maximize
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        
-        //model
-        modelDarah = (DefaultTableModel)tblDarah.getModel();
-        modelPendonoran = (DefaultTableModel)tblPendonoran.getModel();
-        
-        //make cell having foreground color
-        tcrDarah=tblDarah.getColumnModel().getColumn(4);
-        tcrDarah.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
-        
-        tcrPendonoranDetail=tblPendonoran.getColumnModel().getColumn(4);
-        tcrPendonoranDetail.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
-        tcrPendonoranEdit=tblPendonoran.getColumnModel().getColumn(5);
-        tcrPendonoranEdit.setCellRenderer(new ColumnColorRenderer(Color.ORANGE));
     }
 
     /**
@@ -76,6 +48,7 @@ public class FormMain extends javax.swing.JFrame {
         navItem1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         navItem2 = new javax.swing.JLabel();
+        navItem3 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -86,6 +59,11 @@ public class FormMain extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPendonoran = new javax.swing.JTable();
         btnTambahPendonoran = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPengambilan = new javax.swing.JTable();
+        btnTambahPengambilan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -97,18 +75,19 @@ public class FormMain extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(153, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(0, 50));
 
         navBrand.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         navBrand.setForeground(new java.awt.Color(255, 255, 255));
+        navBrand.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
         navBrand.setText("Logo");
         navBrand.setPreferredSize(new java.awt.Dimension(43, 30));
 
         navItem1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         navItem1.setForeground(java.awt.Color.lightGray);
         navItem1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        navItem1.setText("Home");
+        navItem1.setText("Stok Darah");
         navItem1.setPreferredSize(new java.awt.Dimension(43, 30));
         navItem1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -126,6 +105,17 @@ public class FormMain extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(204, 204, 204));
         jLabel8.setText("Logout");
         jLabel8.setPreferredSize(new java.awt.Dimension(43, 30));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel8MouseExited(evt);
+            }
+        });
 
         navItem2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         navItem2.setForeground(java.awt.Color.lightGray);
@@ -144,17 +134,36 @@ public class FormMain extends javax.swing.JFrame {
             }
         });
 
+        navItem3.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        navItem3.setForeground(java.awt.Color.lightGray);
+        navItem3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        navItem3.setText("Pengambilan");
+        navItem3.setPreferredSize(new java.awt.Dimension(43, 30));
+        navItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                navItem3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                navItem3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                navItem3MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(navBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(navBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(navItem1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(25, 25, 25)
                 .addComponent(navItem2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(navItem3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
@@ -163,12 +172,14 @@ public class FormMain extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(navBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(navItem1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(navItem2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(navBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(navItem1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(navItem2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(navItem3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -223,19 +234,19 @@ public class FormMain extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap())
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane2.addTab("", jPanel2);
+        jTabbedPane2.addTab("Logged in as", jPanel2);
 
         jLabel9.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel9.setText("Tabel Pendonoran");
@@ -299,7 +310,7 @@ public class FormMain extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTambahPendonoran))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 706, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,23 +318,100 @@ public class FormMain extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(btnTambahPendonoran))
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                    .addComponent(btnTambahPendonoran, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane2.addTab("", jPanel3);
+        jTabbedPane2.addTab(":", jPanel3);
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel10.setText("Tabel Pengambilan");
+
+        jScrollPane3.setOpaque(false);
+
+        tblPengambilan.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        tblPengambilan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Pengambilan", "Gol Darah", "ID Kantong", "Nama Pasien", "Tgl Ambil", "Detil", "Ubah", "Hapus"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPengambilan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblPengambilan.setName(""); // NOI18N
+        tblPengambilan.setRowHeight(30);
+        tblPengambilan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblPengambilan.getTableHeader().setReorderingAllowed(false);
+        tblPengambilan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPengambilanMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblPengambilan);
+        tblPengambilan.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblPengambilan.getColumnModel().getColumnCount() > 0) {
+            tblPengambilan.getColumnModel().getColumn(5).setResizable(false);
+            tblPengambilan.getColumnModel().getColumn(6).setResizable(false);
+            tblPengambilan.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        btnTambahPengambilan.setBackground(new java.awt.Color(153, 0, 0));
+        btnTambahPengambilan.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btnTambahPengambilan.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahPengambilan.setText("Tambah Data");
+        btnTambahPengambilan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahPengambilanActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTambahPengambilan))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(btnTambahPengambilan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+
+        jTabbedPane2.addTab("", jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(200, 200, 200)
                 .addComponent(jTabbedPane2)
-                .addGap(50, 50, 50))
+                .addGap(200, 200, 200))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,7 +432,7 @@ public class FormMain extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void navItem1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem1MouseEntered
-        navItem1.setForeground(java.awt.Color.WHITE);
+        navItem1.setForeground(java.awt.Color.RED);
     }//GEN-LAST:event_navItem1MouseEntered
 
     private void navItem1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem1MouseExited
@@ -361,7 +449,7 @@ public class FormMain extends javax.swing.JFrame {
     }//GEN-LAST:event_navItem2MouseClicked
 
     private void navItem2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem2MouseEntered
-        navItem2.setForeground(java.awt.Color.WHITE);
+        navItem2.setForeground(java.awt.Color.RED);
     }//GEN-LAST:event_navItem2MouseEntered
 
     private void navItem2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem2MouseExited
@@ -391,7 +479,7 @@ public class FormMain extends javax.swing.JFrame {
 
     private void tblPendonoranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPendonoranMouseClicked
         if(tblPendonoran.getSelectedColumn()==4){
-            new DialogDetilPendonoran(this, true, (String) tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0)).show();
+            new DialogDetil(this, true, (String) tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0),"Pendonoran").show();
         }
         if(tblPendonoran.getSelectedColumn()==5){
             String[] pendonoran = {(String)tblPendonoran.getValueAt(tblPendonoran.getSelectedRow(), 0)};
@@ -406,6 +494,59 @@ public class FormMain extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tblPendonoranMouseClicked
+
+    private void tblPengambilanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPengambilanMouseClicked
+        if(tblPengambilan.getSelectedColumn()==5){
+            new DialogDetil(this, true, (String) tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 0),"Pengambilan").show();
+        }
+
+        if(tblPengambilan.getSelectedColumn()==6){
+            String[] pengambilan = {(String)tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 0),Model.stringResult("SELECT id_pasien FROM pasien JOIN pengambilan using(id_pasien) where id_pengambilan = '"+tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 0)+"'")};
+            new DialogFormPengambilan(this, true,pengambilan ,"put").show();
+        }
+        
+        if(tblPengambilan.getSelectedColumn()==7){
+            int respon = JOptionPane.showConfirmDialog(this, "Ingin menghapus data pengambilan " + tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 0) + 
+                        "?", "Konfirmasi",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); 
+            if (respon == JOptionPane.YES_OPTION) {
+                Model.delete("pengambilan","id_pengambilan",(String)tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 0));
+                Model.updOrIns("UPDATE darah SET status = 'Tersedia' where id_kantong = '"+tblPengambilan.getValueAt(tblPengambilan.getSelectedRow(), 2)+"'");
+            }
+        }
+    }//GEN-LAST:event_tblPengambilanMouseClicked
+
+    private void btnTambahPengambilanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahPengambilanActionPerformed
+        new DialogFormPengambilan(this, true, new String[] {idCreatePengambilan},"post").show();
+    }//GEN-LAST:event_btnTambahPengambilanActionPerformed
+
+    private void navItem3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem3MouseClicked
+        setSelectedMenu(navItem3, 2);
+    }//GEN-LAST:event_navItem3MouseClicked
+
+    private void navItem3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem3MouseEntered
+       navItem3.setForeground(java.awt.Color.RED);
+    }//GEN-LAST:event_navItem3MouseEntered
+
+    private void navItem3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navItem3MouseExited
+        setDeselectedNav(navItem3, 2);
+    }//GEN-LAST:event_navItem3MouseExited
+
+    private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
+       jLabel8.setForeground(java.awt.Color.RED);
+    }//GEN-LAST:event_jLabel8MouseEntered
+
+    private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
+       jLabel8.setForeground(java.awt.Color.LIGHT_GRAY);
+    }//GEN-LAST:event_jLabel8MouseExited
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+
+        int respon = JOptionPane.showConfirmDialog(this, "Yakin ingin keluar? ", "keluar",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); 
+        if (respon == JOptionPane.YES_OPTION) {
+            dispose();
+            new Login().show();
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -437,48 +578,54 @@ public class FormMain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMain().setVisible(true);
+                new FormMain(username).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTambahPendonoran;
+    private javax.swing.JButton btnTambahPengambilan;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel navBrand;
     private javax.swing.JLabel navItem1;
     private javax.swing.JLabel navItem2;
+    private javax.swing.JLabel navItem3;
     private javax.swing.JTable tblDarah;
     private javax.swing.JTable tblPendonoran;
+    private javax.swing.JTable tblPengambilan;
     // End of variables declaration//GEN-END:variables
     void setSelectedMenu(JLabel navItem, int i){
         navItem1.setForeground(Color.lightGray);
         navItem2.setForeground(Color.lightGray);
-        navItem.setForeground(Color.white);
+        navItem3.setForeground(Color.lightGray);
+        navItem.setForeground(Color.RED);
         jTabbedPane2.setSelectedIndex(i);    
     }
     void setDeselectedNav(JLabel navItem, int i){
         if (jTabbedPane2.getSelectedIndex()!=i) {
             navItem.setForeground(java.awt.Color.LIGHT_GRAY);
         }else{
-            navItem.setForeground(java.awt.Color.WHITE);
+            navItem.setForeground(java.awt.Color.RED);
         }
     }
     void refreshTable(){
+        //Config table darah
+        DefaultTableModel modelDarah;
+        modelDarah = (DefaultTableModel)tblDarah.getModel();
         modelDarah.setRowCount(0);
         modelDarah.fireTableDataChanged();
-        
-        modelPendonoran.setRowCount(0);
-        modelPendonoran.fireTableDataChanged(); 
-        
         String[][] dataDarah = Model.arr2Result("Select id_kantong,gol_darah,nama_pendonor,tgl_donor,status from darah join pendonoran using(id_pendonoran) join pendonor using(id_pendonor) where status = 'Tersedia'");
         for(String[] darah:dataDarah){
             modelDarah.addRow(new Object []{
@@ -489,8 +636,19 @@ public class FormMain extends javax.swing.JFrame {
                 "Detil"
             });
         }
+        TableColumn tcrDarah =tblDarah.getColumnModel().getColumn(4);
+        tcrDarah.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
+        //end config table darah
         
-        String[][] dataPendonoran = Model.arr2Result("Select id_pendonoran,gol_darah,nama_pendonor,tgl_donor from pendonoran join pendonor using(id_pendonor)");
+        //Config table pendonoran
+        DefaultTableModel modelPendonoran;
+        modelPendonoran = (DefaultTableModel)tblPendonoran.getModel();
+        
+        modelPendonoran.setRowCount(0);
+        modelPendonoran.fireTableDataChanged(); 
+        
+
+        String[][] dataPendonoran = Model.arr2Result("Select id_pendonoran,gol_darah,nama_pendonor,tgl_donor from pendonoran join pendonor using(id_pendonor) join darah using(id_pendonoran)");
         for(String[] pendonoran:dataPendonoran){
             modelPendonoran.addRow(new Object []{
                 pendonoran[0],
@@ -501,13 +659,55 @@ public class FormMain extends javax.swing.JFrame {
                 "Ubah",
                 "Hapus",
             });
-            idCreatePendonoran = pendonoran[0];
         }
+        
+        TableColumn tcrPendonoranDetail = tblPendonoran.getColumnModel().getColumn(4);
+        tcrPendonoranDetail.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
+       
+        TableColumn tcrPendonoranEdit = tblPendonoran.getColumnModel().getColumn(5);
+        tcrPendonoranEdit.setCellRenderer(new ColumnColorRenderer(Color.ORANGE));
+
+        TableColumn tcrPendonoranHapus=tblPendonoran.getColumnModel().getColumn(6);
+        tcrPendonoranHapus.setCellRenderer(new ColumnColorRenderer(Color.RED));
+        //end config pendonoran
+        
+        //Config table pengambilan
+        DefaultTableModel modelPengambilan;
+        modelPengambilan = (DefaultTableModel)tblPengambilan.getModel();
+        
+        modelPengambilan.setRowCount(0);
+        modelPengambilan.fireTableDataChanged(); 
+        
+
+        String[][] dataPengambilan = Model.arr2Result("Select id_pengambilan,gol_darah,id_kantong,nama_pasien,tgl_ambil from pengambilan join pasien using(id_pasien) join darah using(id_kantong)");
+        for(String[] pengambilan:dataPengambilan){
+            modelPengambilan.addRow(new Object []{
+                pengambilan[0],
+                pengambilan[1],
+                pengambilan[2],
+                pengambilan[3],
+                pengambilan[4],
+                "Detil",
+                "Ubah",
+                "Hapus",
+            });
+        }
+        
+        TableColumn tcrPengambilanDetail = tblPengambilan.getColumnModel().getColumn(5);
+        tcrPengambilanDetail.setCellRenderer(new ColumnColorRenderer(Color.BLUE));
+       
+        TableColumn tcrPengambilanEdit = tblPengambilan.getColumnModel().getColumn(6);
+        tcrPengambilanEdit.setCellRenderer(new ColumnColorRenderer(Color.ORANGE));
+
+        TableColumn tcrPengambilanHapus=tblPengambilan.getColumnModel().getColumn(7);
+        tcrPengambilanHapus.setCellRenderer(new ColumnColorRenderer(Color.RED));
+        //end config pendonoran
         
         generateCreateId();
     }
     void generateCreateId(){
-        
+        idCreatePendonoran = Model.stringResult("SELECT id_pendonoran FROM pendonoran ORDER BY id_pendonoran DESC LIMIT 1");
+        idCreatePendonoran = idCreatePendonoran.isEmpty() ? "DO00000" : idCreatePendonoran;
         String sIdCreatePendonoran = "";
         for (int i = 2; i < 7; i++) {
             sIdCreatePendonoran += idCreatePendonoran.charAt(i);
@@ -525,9 +725,30 @@ public class FormMain extends javax.swing.JFrame {
         }else{
             idCreatePendonoran= "DO"+iIdCreatePendonoran;
         }
+        
         idCreateDarah = idCreatePendonoran.replace('D', 'K').replace('O', 'A');
-    }
+        
+        
+        idCreatePengambilan = Model.stringResult("SELECT id_pengambilan FROM pengambilan ORDER BY id_pengambilan DESC LIMIT 1");
+        idCreatePengambilan = idCreatePengambilan.isEmpty() ? "AM00000" : idCreatePengambilan;
+        String sIdCreatePengambilan = "";
+        for (int i = 2; i < 7; i++) {
+            sIdCreatePengambilan += idCreatePengambilan.charAt(i);
+        }
+        int iIdCreatePengambilan = Integer.parseInt(sIdCreatePengambilan)+1;
 
+        if(iIdCreatePengambilan<10){
+            idCreatePengambilan= "AM0000"+iIdCreatePengambilan;
+        }else if(iIdCreatePengambilan<100){
+            idCreatePengambilan= "AM000"+iIdCreatePengambilan;
+        }else if(iIdCreatePengambilan<1000){
+            idCreatePengambilan= "AM00"+iIdCreatePengambilan;
+        }else if(iIdCreatePengambilan<10000){
+            idCreatePengambilan= "AM0"+iIdCreatePengambilan;
+        }else{
+            idCreatePengambilan= "AM"+iIdCreatePengambilan;
+        }
+    }
 }
 
 class ColumnColorRenderer extends DefaultTableCellRenderer {
@@ -537,6 +758,7 @@ class ColumnColorRenderer extends DefaultTableCellRenderer {
       this.foregroundColor = foregroundColor;
    }
    
+   @Override
    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,   boolean hasFocus, int row, int column) {
       Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
       cell.setForeground(foregroundColor);

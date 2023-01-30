@@ -11,27 +11,39 @@ import java.awt.Toolkit;
  *
  * @author Ardalepa Muhamad
  */
-public class DialogDetilPendonoran extends javax.swing.JDialog {
+public class DialogDetil extends javax.swing.JDialog {
 
     /**
      * Creates new form a
      */
-    private static String idPendonoran;
-    public DialogDetilPendonoran(java.awt.Frame parent, boolean modal,String idPendonoran) {
+    private static String id;
+    private static String table;
+    public DialogDetil(java.awt.Frame parent, boolean modal,String id,String table) {
         super(parent, modal);
-        this.idPendonoran = idPendonoran;
+        this.id = id;
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
-        String[] pendonoran = Model.arrResult("SELECT id_pendonoran, gol_darah, nama_pendonor,tgl_lahir,alamat,no_tlp,tgl_donor FROM pendonoran JOIN pendonor USING(id_pendonor) WHERE id_pendonoran = '"+idPendonoran+"'");
-        lblIdPendonoran.setText(pendonoran[0]);
-        lblGolDarah.setText(pendonoran[1]);
-        lblPendonor.setText(pendonoran[2]);
-        lblTglLahir.setText(pendonoran[3]);
-        lblAlamat.setText(pendonoran[4]);
-        lblNoTlp.setText(pendonoran[5]);
-        lblTglDonor.setText(pendonoran[6]);
+        String[] pendonoran = table.equals("Pendonoran")? 
+                Model.arrResult("SELECT id_pendonoran, nama_pendonor,tgl_lahir,alamat,no_tlp,tgl_donor FROM pendonoran JOIN pendonor USING(id_pendonor) WHERE id_pendonoran = '"+id+"'") :
+                Model.arrResult("SELECT id_pengambilan, nama_pasien,tgl_lahir,alamat,no_tlp,tgl_ambil,id_kantong FROM pengambilan JOIN pasien USING(id_pasien) WHERE id_pengambilan = '"+id+"'");
+                
+        String gol_darah = table.equals("Pendonoran")? 
+                Model.stringResult("SELECT gol_darah from darah WHERE id_pendonoran = '"+pendonoran[0]+"'"):
+                Model.stringResult("SELECT gol_darah from darah join pengambilan using(id_kantong) WHERE id_kantong = '"+pendonoran[6]+"'");
+
+        lblId.setText(pendonoran[0]);
+        lblGolDarah.setText(gol_darah);
+        lblNama.setText(pendonoran[1]);
+        lblTglLahir.setText(pendonoran[2]);
+        lblAlamat.setText(pendonoran[3]);
+        lblNoTlp.setText(pendonoran[4]);
+        lblTgl.setText(pendonoran[5]);
+        
+        title.setText("Detail "+table);
+        nama.setText("Nama "+(table.equals("Pendonoran")?"Pendonor":"Pasien"));
+        tgl.setText("Tanggal "+table);
     }
     
 
@@ -45,22 +57,22 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblIdPendonoran = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblGolDarah = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        lblPendonor = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblNama = new javax.swing.JLabel();
+        nama = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         lblTglLahir = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         lblNoTlp = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        lblTglDonor = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lblTgl = new javax.swing.JLabel();
+        tgl = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         lblAlamat = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -70,12 +82,12 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblIdPendonoran.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        lblIdPendonoran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblId.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        lblId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Detil Pendonoran");
+        title.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("Detil Pendonoran");
 
         jLabel4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -84,12 +96,12 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
         lblGolDarah.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lblGolDarah.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        lblPendonor.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        lblPendonor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNama.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        lblNama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        jLabel7.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel7.setText("Nama Pendonor");
+        nama.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        nama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        nama.setText("Nama Pendonor");
 
         lblTglLahir.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lblTglLahir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -105,12 +117,12 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setText("No Telp");
 
-        lblTglDonor.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        lblTglDonor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTgl.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        lblTgl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        jLabel11.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel11.setText("Tanggal Donor");
+        tgl.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        tgl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        tgl.setText("Tanggal Donor");
 
         lblAlamat.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lblAlamat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -126,13 +138,13 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                    .addComponent(lblIdPendonoran, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(lblId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblGolDarah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblPendonor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nama, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNama, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator3)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTglLahir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -140,8 +152,8 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblNoTlp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator5)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTglDonor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tgl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTgl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblAlamat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator6))
@@ -151,9 +163,9 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblIdPendonoran, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,9 +173,9 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPendonor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -185,9 +197,9 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tgl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTglDonor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
 
@@ -224,14 +236,18 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogDetilPendonoran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogDetil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogDetilPendonoran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogDetil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogDetilPendonoran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogDetil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogDetilPendonoran.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogDetil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -240,7 +256,7 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogDetilPendonoran dialog = new DialogDetilPendonoran(new javax.swing.JFrame(), true,idPendonoran);
+                DialogDetil dialog = new DialogDetil(new javax.swing.JFrame(), true,id,table);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -254,11 +270,8 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator2;
@@ -268,10 +281,13 @@ public class DialogDetilPendonoran extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lblAlamat;
     private javax.swing.JLabel lblGolDarah;
-    private javax.swing.JLabel lblIdPendonoran;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblNama;
     private javax.swing.JLabel lblNoTlp;
-    private javax.swing.JLabel lblPendonor;
-    private javax.swing.JLabel lblTglDonor;
+    private javax.swing.JLabel lblTgl;
     private javax.swing.JLabel lblTglLahir;
+    private javax.swing.JLabel nama;
+    private javax.swing.JLabel tgl;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
