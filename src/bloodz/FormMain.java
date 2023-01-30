@@ -324,7 +324,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane2.addTab(":", jPanel3);
+        jTabbedPane2.addTab("", jPanel3);
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
         jLabel10.setText("Tabel Pengambilan");
